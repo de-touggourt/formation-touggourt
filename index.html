@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>الخدمات الإجتماعية توقرت - تسجيل الدخول</title>
+  <title>فضاء التكوين توقرت - تسجيل الدخول</title>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -258,8 +258,8 @@
       <div class="header-text">
         <p>الجمهورية الجزائرية الديمقراطية الشعبية</p>
         <p>وزارة التربية الوطنية</p>
-        <p>اللجنة الوطنية للخدمات الإجتماعية لعمال التربية</p>
-        <p>اللجنة الولائية للخدمات الإجتماعية لعمال التربية لولاية توقرت</p>
+        <p>مديرية التربية لولاية توقرت</p>
+        <p>مصلحة التكون والتفتيش</p>
       </div>
       
       <div class="login-logo-wrapper">
@@ -267,7 +267,7 @@
           <img src="https://lh3.googleusercontent.com/d/1AOSzlvuRb-fAO0bqvo412HcHTfpRAX15" alt="شعار اللجنة" class="login-logo">
       </div>
 
-      <h2 class="login-title">بوابة الدخول للسلفة الإستثنائية</h2>
+      <h2 class="login-title">فضاء الرقمي للتتكوين توقرت</h2>
       
       <input type="text" id="empId" placeholder="أدخل رقم التعريف الوظيفي" oninput="validateNumber(this)">
       
@@ -380,7 +380,7 @@ async function checkEmployee() {
     Swal.fire({
       icon: 'success',
       title: 'تم التحقق بنجاح',
-      html: `مرحباً بك <b>${data.name || ''}</b><br>جاري تحويلك إلى لوحة التحكم...`,
+      html: `مرحباً بك <b>${data.name || ''}</b><br>جاري تسجيل الدخول ...`,
       timer: 1500,
       timerProgressBar: true,
       showConfirmButton: false,
@@ -560,7 +560,7 @@ window.onload = function() {
         const msg = document.createElement("div");
         msg.innerHTML = `
         <div style="background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 10px; padding: 15px; margin-bottom: 20px; font-size: 18px; font-weight: 600;">
-            التسجيل مغلق حاليًا<br>سيتم فتح الموقع قريبا...
+            الموقع مغلق حاليًا<br>
         </div>`;
         document.querySelector(".header-text").appendChild(msg);
     }
@@ -569,3 +569,4 @@ window.onload = function() {
 </script>
 </body>
 </html>
+
