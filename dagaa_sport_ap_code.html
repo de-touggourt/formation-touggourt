@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فضاء التكوين البيداغوجي</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+/* --- تنسيقات الصفحة العامة --- */
+body{
+  font-family:'Cairo',sans-serif;
+  margin:0;
+  background:linear-gradient(135deg,#e8fbf0,#dcf7e6);
+  text-align:center;
+}
+
+header{
+  background:#0FBA50; /* اللون الرئيسي */
+  color:#fff;
+  padding:30px 15px;
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.services{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  padding:40px 20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.service{
+  background:#fff;
+  border-radius:20px;
+  padding:30px 15px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  transition:.4s;
+}
+.service:hover{transform:translateY(-8px) scale(1.05);}
+
+.service i{
+  font-size:55px;
+  color:#0FBA50;
+  margin-bottom:15px;
+}
+
+.service h3{
+  color:#0e7a40;
+}
+
+/* --- تنسيقات نافذة اختيار الدورة --- */
+.icon-container{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.icon-btn{
+  width:130px;
+  height:130px;
+  border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  border:2px solid #0FBA50;
+  background:#f0fdf4;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.icon-btn:hover:not(.closed){
+  background:#0FBA50;
+  color:#fff;
+}
+
+.icon-btn.closed{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.badge{
+  margin-top:6px;
+  padding:4px 10px;
+  border-radius:12px;
+  font-size:13px;
+}
+.badge.open{background:#e8fbf0;color:#0e7a40;}
+.badge.closed{background:#ffebee;color:#c62828;}
+
+/* --- تنسيقات قائمة الفيديوهات (Google Drive) --- */
+.video-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px; 
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.video-btn {
+  background: #fff;
+  border: 2px solid #0FBA50;
+  color: #0FBA50;
+  padding: 15px;
+  border-radius: 15px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-btn:hover {
+  background: #0FBA50;
+  color: #fff;
+}
+
+.video-btn i {
+  font-size: 24px;
+  color: #0FBA50;
+}
+.video-btn:hover i {
+  color: #fff;
+}
+
+/* --- تنسيق مشغل الفيديو --- */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* نسبة 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 4px solid #0FBA50;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- تنسيق أيقونة التحميل (Spinner) --- */
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0fdf4;
+  z-index: 1;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0FBA50;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+footer{
+  background:#0FBA50;
+  color:#fff;
+  padding:15px;
+  border-top-left-radius:25px;
+  border-top-right-radius:25px;
+}
+
+/* --- تنسيق أزرار SweetAlert --- */
+
+/* زر الإغلاق/العودة (رمادي كما طلبت) */
+.swal2-confirm{
+  background:#939393 !important;
+  color:#333 !important;
+  border-radius:20px !important;
+  padding:8px 35px !important;
+  font-family:'Cairo',sans-serif;
+  font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  border: none !important;
+}
+
+.swal2-confirm:hover{
+  background:#d6d6d6 !important;
+}
+
+/* زر الإلغاء (أحمر) */
+.swal2-cancel{
+  background:#d33 !important;
+  color:#fff !important;
+  border-radius:20px !important;
+  padding:8px 35px !important;
+  font-family:'Cairo',sans-serif;
+  font-weight:600;
+  border: none !important;
+}
+
+/* فئة خاصة لزر الدخول (أخضر) */
+.green-confirm-btn {
+  background: #0FBA50 !important;
+  color: #fff !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>فضاء التكوين البيداغوجي للأساتذة الجدد</h1>
+  <p>فضاء رقمي مخصص لتكوين أساتذة التربية البدنية بالطور الابتدائي</p>
+</header>
+
+<section class="services">
+
+  <div class="service" onclick="openCourses('didactique')">
+    <i class="fa-solid fa-chalkboard"></i>
+    <h3>تعليمية مادة التخصص</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('tasyire')">
+    <i class="fa-solid fa-users-gear"></i>
+    <h3>تقنيات تسيير القسم</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('takwime')">
+    <i class="fa-solid fa-clipboard-check"></i>
+    <h3>التقويم و المعالجة البيداغوجية</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('informatique')">
+    <i class="fa-solid fa-computer"></i>
+    <h3>الإعلام الآلي</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('nidame')">
+    <i class="fa-solid fa-school"></i>
+    <h3>النظام التربوي و المناهج</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('akhlakiyate')">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <h3>أخلاقيات المهنة</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('handasa')">
+    <i class="fa-solid fa-network-wired"></i>
+    <h3>هندسة التكوين</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('wasata')">
+    <i class="fa-solid fa-handshake"></i>
+    <h3>الوساطة المدرسية</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('tachri')">
+    <i class="fa-solid fa-gavel"></i>
+    <h3>التشريع المدرسي</h3>
+  </div>
+
+  <div class="service" onclick="openCourses('psycho')">
+    <i class="fa-solid fa-brain"></i>
+    <h3>علوم التربية وعلم النفس</h3>
+  </div>
+
+  <div class="service" onclick="handleLessonsClick()">
+    <i class="fa-solid fa-clapperboard"></i>
+    <h3>دروس تطبيقية</h3>
+  </div>
+
+</section>
+
+<footer>© 2025 فضاء التكوين</footer>
+
+<script>
+/* =======================================================
+   🔴🔴 إعدادات الحماية (الرقم السري) 🔴🔴
+   ======================================================= */
+   
+const ENABLE_PASSWORD = false; 
+
+const SECURE_CODE = 'ZmVoQDIwMjY=';
+
+/* ======================================================= */
+
+// دالة التحكم الرئيسية
+function handleLessonsClick() {
+  if (ENABLE_PASSWORD) {
+    checkPassword();
+  } else {
+    openVideoList();
+  }
+}
+
+// دالة التحقق من كلمة السر (الطريقة المضمونة)
+function checkPassword() {
+  Swal.fire({
+    title: 'منطقة محمية',
+    text: 'يرجى إدخال الرقم السري لفتح الدروس التطبيقية',
+    input: 'password', 
+    inputAttributes: {
+      autocapitalize: 'off',
+      autocorrect: 'off',
+      placeholder: '••••••••'
+    },
+    showCancelButton: true,
+    confirmButtonText: 'دخول',
+    cancelButtonText: 'إلغاء',
+    customClass: {
+      confirmButton: 'green-confirm-btn' // زر الدخول أخضر
+    },
+    cancelButtonColor: '#d33',
+    preConfirm: (password) => {
+      // 1. نحذف أي مسافات زائدة قد يكتبها المستخدم بالخطأ
+      const cleanPass = password ? password.trim() : '';
+      
+      // 2. نحول ما كتبه المستخدم إلى كود مشفر ونقارنه
+      try {
+        if (btoa(cleanPass) === SECURE_CODE) {
+          return true;
+        } else {
+          Swal.showValidationMessage('كلمة المرور خاطئة، حاول مجدداً');
+        }
+      } catch (e) {
+        Swal.showValidationMessage('حدث خطأ، تأكد من كتابة الأحرف الإنجليزية فقط');
+      }
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      openVideoList();
+    }
+  });
+}
+
+
+/* =========================================
+   1. بيانات ودوال المجلدات (الأيقونات العادية)
+   ========================================= */
+
+const driveLinks = {
+  didactique:{1:"https://drive.google.com/drive/folders/130Fogml3fCsFkUdpNIoaFXvAWfypD5v0?usp=drive_link",2:"",3:""},
+  tasyire:{1:"https://drive.google.com/drive/folders/1vtK5JBS7vmskAU14Ph7-oWBG13o6IAB_?usp=drive_link",2:"",3:""},
+  takwime:{1:"https://drive.google.com/drive/folders/1AqQTkajWK1xePfqGEE9wOtkQsQHHibFj?usp=drive_link",2:"",3:""},
+  nidame:{1:"https://drive.google.com/drive/folders/16JwrdI4ziALQJ173zbhehNxkjczBPxEu?usp=drive_link",2:"",3:""},
+  akhlakiyate:{1:"https://drive.google.com/drive/folders/18KVnZ022tFOoqfTJXGrWtnRHrzMpOKZM?usp=drive_link",2:"",3:""},
+  handasa:{1:"https://drive.google.com/drive/folders/1tkikbCZ-fYmMroJ5yGZ3FxdHPEvq1wY4?usp=drive_link",2:"",3:""},
+  wasata:{1:"https://drive.google.com/drive/folders/1OqdCf5cHxJUIX1YIlZ1ZefxmEOzIkG_q?usp=drive_link",2:"",3:""},
+  tachri:{1:"https://drive.google.com/drive/folders/1M2DQRT3gaaoq3VL1NxKgCVxsx6i0Ll9u?usp=drive_link",2:"",3:""},
+  psycho:{1:"https://drive.google.com/drive/folders/1ZExuodHzj5LkWCkgajk67sS4S0IZdOjF?usp=drive_link",2:"",3:""},
+  informatique:{1:"https://drive.google.com/drive/folders/1MIBO4TNu1bJhaZ2S2lHtD5WYPESsge5u?usp=drive_link",2:"HHHH",3:"IIII"}
+};
+
+const globalCycleStatus = {1:true, 2:false, 3:false};
+const moduleCycleStatus = {
+  didactique:{1:true,2:true,3:true}, tasyire:{1:true,2:true,3:true}, takwime:{1:true,2:true,3:true},
+  nidame:{1:true,2:true,3:true}, akhlakiyate:{1:true,2:true,3:true}, handasa:{1:true,2:true,3:true},
+  wasata:{1:true,2:true,3:true}, tachri:{1:true,2:true,3:true}, psycho:{1:true,2:true,3:true},
+  informatique:{1:true,2:true,3:true}
+};
+
+function isCycleOpen(module,cycle){
+  if(!globalCycleStatus[cycle]) return false;
+  return moduleCycleStatus[module][cycle];
+}
+
+function openCourses(module){
+  let html='<div class="icon-container">';
+  for(let i=1;i<=3;i++){
+    const open=isCycleOpen(module,i);
+    html+=`
+      <div class="icon-btn ${open?'':'closed'}"
+        onclick="${open?`openDrive('${module}',${i})`:''}">
+        الدورة ${i===1?'الأولى':i===2?'الثانية':'الثالثة'}
+        <span class="badge ${open?'open':'closed'}">
+          ${open?'مفتوحة':'مغلقة'}
+        </span>
+      </div>`;
+  }
+  html+='</div>';
+
+  Swal.fire({
+    title: 'اختر الدورة',
+    html: html,
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    buttonsStyling: true
+  });
+}
+
+function openDrive(module,cycle){
+  window.open(driveLinks[module][cycle],'_blank');
+}
+
+
+/* =======================================================
+   3. كود الدروس التطبيقية (Google Drive)
+   ======================================================= */
+
+// 🔴 ضع هنا روابط فيديوهاتك على Google Drive
+const videos = [
+  { 
+    title: "الدرس التطبيقي الأول:", 
+    url: "" 
+  },
+ 
+];
+
+function convertToPreviewUrl(url) {
+  return url.replace(/\/view.*/, '/preview');
+}
+
+function openVideoList() {
+  let listHtml = '<div class="video-list-container">';
+  
+  videos.forEach((video) => {
+    listHtml += `
+      <div class="video-btn" onclick="playVideo('${video.url}', '${video.title}')">
+        <span>${video.title}</span>
+       <i class="fa-solid fa-circle-play"></i>
+      </div>
+    `;
+  });
+
+  listHtml += '</div>';
+
+  Swal.fire({
+    title: 'الدروس التطبيقية',
+    html: listHtml,
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    width: '600px'
+  });
+}
+
+function playVideo(url, title) {
+  const previewUrl = convertToPreviewUrl(url);
+
+  Swal.fire({
+    title: title,
+    html: `
+      <div class="video-wrapper">
+        <div class="loader-container" id="videoLoader">
+          <div class="loader"></div>
+        </div>
+        <iframe 
+          src="${previewUrl}" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen
+          onload="document.getElementById('videoLoader').style.display='none';"
+          style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2;"
+        ></iframe>
+      </div>
+    `,
+    width: '800px',
+    showCloseButton: true,
+    showConfirmButton: false,
+    showDenyButton: true,
+    denyButtonText: 'عودة للقائمة',
+    denyButtonColor: '#0FBA50'
+  }).then((result) => {
+    if (result.isDenied) {
+      openVideoList();
+    }
+  });
+}
+</script>
+
+</body>
+</html>
