@@ -339,7 +339,7 @@ async function checkEmployee() {
 
   try {
     // 2. البحث في Firebase
-    const docRef = db.collection("employeescom").doc(empId);
+    const docRef = db.collection("employeescomnew").doc(empId);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
@@ -569,6 +569,7 @@ window.onload = function() {
 </script>
 </body>
 </html>
+
 
 
 
