@@ -35,6 +35,7 @@ body{
     position: relative;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    overflow: hidden; /* لمنع تجاوز النص */
 }
 
 .typewriter-text {
@@ -44,6 +45,8 @@ body{
     opacity: 1;
     transition: opacity 1s ease-in-out;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    white-space: nowrap; /* نص في سطر واحد */
+    padding: 0 10px;
 }
 
 .typewriter-text.fade-out {
@@ -118,6 +121,7 @@ header{
 header h1 {
     margin-top: 5px;
     margin-bottom: 10px;
+    font-size: 2em; /* حجم افتراضي */
 }
 
 header p {
@@ -397,6 +401,78 @@ footer{
   margin: 0;
 }
 
+/* ====================================================
+   📱 تحسينات التجاوب مع الهاتف (Mobile Responsive CSS)
+   ==================================================== */
+@media screen and (max-width: 768px) {
+    /* تصغير الخط في شريط الأخبار للهواتف */
+    .typewriter-text {
+        font-size: 13px; 
+    }
+    
+    /* تصغير الشعار */
+    .logo-container {
+        width: 120px;
+        height: 120px;
+    }
+    .logo-container img {
+        width: 100px;
+        height: 100px;
+    }
+    .logo-ring {
+        width: 110px;
+        height: 110px;
+    }
+    
+    /* تصغير عنوان الهيدر */
+    header h1 {
+        font-size: 1.4em;
+        margin-top: 10px;
+    }
+
+    /* تصغير صندوق المعلومات */
+    .info-box {
+        margin: 10px;
+        padding: 15px 10px;
+        width: auto;
+    }
+    .info-box h1 {
+        font-size: 20px;
+    }
+    .info-box p {
+        font-size: 15px;
+    }
+
+    /* تحسين شبكة الخدمات للموبايل */
+    .services {
+        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); /* عمودين في الهواتف */
+        gap: 15px;
+        padding: 20px 15px;
+    }
+    
+    .service {
+        padding: 20px 10px;
+    }
+    
+    .service i {
+        font-size: 40px;
+    }
+    
+    .service h3 {
+        font-size: 16px;
+    }
+
+    /* تصغير أزرار اختيار الدورة في النافذة المنبثقة */
+    .icon-btn {
+        width: 100px;
+        height: 100px;
+        font-size: 14px;
+    }
+    
+    .icon-container {
+        gap: 10px;
+    }
+}
 
 </style>
 </head>
@@ -647,6 +723,11 @@ function getFolderId(url) {
     return match ? match[1] : null;
 }
 
+// دالة مساعدة لتحديد العرض المناسب للهاتف أو الكمبيوتر
+function getPopupWidth(defaultWidth) {
+    return window.innerWidth < 768 ? '95%' : defaultWidth;
+}
+
 function openCourses(module){
   let html='<div class="icon-container">';
   for(let i=1;i<=3;i++){
@@ -667,7 +748,7 @@ function openCourses(module){
     html: html,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: getPopupWidth('600px') // تم تعديل العرض ليكون متجاوباً
   });
 }
 
@@ -681,22 +762,23 @@ function showDriveEmbed(module, cycle) {
   }
 
   const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
-
-  // التحقق من المتغير لإظهار الزر أو إخفائه
   const driveButtonHtml = SHOW_DRIVE_BUTTON ? 
     `<a href="${url}" target="_blank" class="drive-link-btn">
         <i class="fa-brands fa-google-drive"></i> فتح في Google Drive
      </a>` : '';
 
+  // تحديد ارتفاع مناسب للموبايل
+  const heightStyle = window.innerWidth < 768 ? '300px' : '400px';
+
   Swal.fire({
     title: `ملفات الدورة ${cycle===1?'الأولى':cycle===2?'الثانية':'الثالثة'}`,
     html: `
-      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: 400px; margin-bottom: 15px;">
+      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: ${heightStyle}; margin-bottom: 15px;">
         <iframe src="${embedUrl}" style="width:100%; height:100%; border:none;"></iframe>
       </div>
       ${driveButtonHtml}
     `,
-    width: '700px',
+    width: getPopupWidth('700px'), // تم تعديل العرض ليكون متجاوباً
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
     showDenyButton: true,
@@ -740,7 +822,7 @@ function openVideoList() {
     html: listHtml,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: getPopupWidth('600px') // تم تعديل العرض ليكون متجاوباً
   });
 }
 
@@ -765,7 +847,7 @@ function playVideo(url, title) {
         ></iframe>
       </div>
     `,
-    width: '800px',
+    width: getPopupWidth('800px'), // تم تعديل العرض ليكون متجاوباً
     showCloseButton: false,
     showConfirmButton: false,
     showDenyButton: true,
