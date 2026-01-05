@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>فضاء التكوين البيداغوجي - توقرت</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,11 @@
 
 <style>
 /* 1. تنسيقات الجسم */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body{
   font-family:'Cairo',sans-serif;
   margin:0;
@@ -19,6 +24,7 @@ body{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* ===========================
@@ -28,13 +34,14 @@ body{
     background-color: #085d28;
     color: #fff;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    padding: 10px 15px;
 }
 
 .typewriter-text {
@@ -44,6 +51,8 @@ body{
     opacity: 1;
     transition: opacity 1s ease-in-out;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 .typewriter-text.fade-out {
@@ -118,6 +127,8 @@ header{
 header h1 {
     margin-top: 5px;
     margin-bottom: 10px;
+    font-size: 28px;
+    line-height: 1.4;
 }
 
 header p {
@@ -146,8 +157,14 @@ header p {
   cursor:pointer;
   box-shadow:0 4px 10px rgba(0,0,0,.1);
   transition:.4s;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .service:hover{transform:translateY(-8px) scale(1.05);}
+.service:active{transform:translateY(-4px) scale(1.02);}
 
 .service i{
   font-size:55px;
@@ -157,6 +174,9 @@ header p {
 
 .service h3{
   color:#0e7a40;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.4;
 }
 
 /* --- تنسيقات نافذة اختيار الدورة --- */
@@ -165,6 +185,7 @@ header p {
   justify-content:center;
   gap:20px;
   flex-wrap:wrap;
+  padding: 10px;
 }
 
 .icon-btn{
@@ -180,11 +201,16 @@ header p {
   background:#f0fdf4;
   cursor:pointer;
   transition:.3s;
+  font-size: 16px;
 }
 
 .icon-btn:hover:not(.closed){
   background:#0FBA50;
   color:#fff;
+}
+
+.icon-btn:active:not(.closed){
+  transform: scale(0.95);
 }
 
 .icon-btn.closed{
@@ -207,16 +233,20 @@ header p {
   margin-top: 15px;
   background-color: #0FBA50;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: 0.3s;
+  font-size: 16px;
 }
 .drive-link-btn:hover {
   background-color: #0a8a3a;
   transform: scale(1.05);
+}
+.drive-link-btn:active {
+  transform: scale(0.98);
 }
 
 /* --- تنسيقات قائمة الفيديوهات --- */
@@ -226,7 +256,7 @@ header p {
   gap: 10px;
   max-height: 400px; 
   overflow-y: auto;
-  padding: 5px;
+  padding: 10px;
 }
 
 .video-btn {
@@ -243,6 +273,7 @@ header p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 60px;
 }
 
 .video-btn:hover {
@@ -250,12 +281,23 @@ header p {
   color: #fff;
 }
 
+.video-btn:active {
+  transform: scale(0.98);
+}
+
 .video-btn i {
   font-size: 24px;
   color: #0FBA50;
+  flex-shrink: 0;
 }
 .video-btn:hover i {
   color: #fff;
+}
+
+.video-btn span {
+  flex: 1;
+  text-align: right;
+  padding-right: 10px;
 }
 
 /* --- تنسيق مشغل الفيديو --- */
@@ -312,23 +354,37 @@ footer{
   border-top-left-radius:25px;
   border-top-right-radius:25px;
   margin-top: auto;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* --- تنسيق أزرار SweetAlert --- */
 .swal2-popup {
     border-radius: 20px !important;
+    padding: 20px !important;
+}
+
+.swal2-title {
+    font-size: 24px !important;
+    padding: 10px !important;
+}
+
+.swal2-html-container {
+    margin: 15px 0 !important;
 }
 
 .swal2-confirm{
   background:#939393 !important;
   color:#333 !important;
   border-radius:20px !important;
-  padding:8px 35px !important;
+  padding:10px 30px !important;
   font-family:'Cairo',sans-serif;
   font-weight:600;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
   border: none !important;
   margin: 5px !important;
+  font-size: 16px !important;
+  min-width: 100px;
 }
 
 .swal2-confirm:hover{
@@ -339,11 +395,13 @@ footer{
   background:#0FBA50 !important;
   color:#fff !important;
   border-radius:20px !important;
-  padding:8px 35px !important;
+  padding:10px 30px !important;
   font-family:'Cairo',sans-serif;
   font-weight:600;
   border: none !important;
   margin: 5px !important;
+  font-size: 16px !important;
+  min-width: 100px;
 }
 .swal2-deny:hover{
     background: #0b963f !important;
@@ -353,17 +411,18 @@ footer{
   background:#d33 !important;
   color:#fff !important;
   border-radius:20px !important;
-  padding:8px 35px !important;
+  padding:10px 30px !important;
   font-family:'Cairo',sans-serif;
   font-weight:600;
   border: none !important;
+  font-size: 16px !important;
+  min-width: 100px;
 }
 
 .green-confirm-btn {
   background: #0FBA50 !important;
   color: #fff !important;
 }
-
 
 .info-box{
   max-width: 850px;
@@ -381,6 +440,7 @@ footer{
   font-size: 30px;
   font-weight: 700;
   margin: 0 0 12px;
+  line-height: 1.4;
 }
 
 .info-box hr{
@@ -395,62 +455,81 @@ footer{
   font-size: 18px;
   font-weight: 700;
   margin: 0;
+  line-height: 1.5;
 }
 
+/* ====== RESPONSIVE - TABLET ====== */
+@media (max-width: 992px) {
+  .services {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 30px 15px;
+  }
 
-/* ====== RESPONSIVE ADDITION (Mobile) ====== */
-
-button, .service, .icon-btn {
-  touch-action: manipulation;
+  .swal2-popup {
+    width: 90% !important;
+  }
 }
 
+/* ====== RESPONSIVE - MOBILE ====== */
 @media (max-width: 768px) {
 
   .news-ticker-container {
-    height: auto;
-    padding: 8px;
+    min-height: 60px;
+    padding: 10px;
   }
 
   .typewriter-text {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.6;
     text-align: center;
+    padding: 0 5px;
   }
 
   header {
-    padding: 20px 10px;
+    padding: 20px 12px;
   }
 
   header h1 {
     font-size: 20px;
+    line-height: 1.5;
+    padding: 0 5px;
   }
 
   .logo-container {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 5px;
   }
 
   .logo-container img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
   }
 
   .logo-ring {
-    width: 115px;
-    height: 115px;
+    width: 105px;
+    height: 105px;
+    border-width: 2px;
   }
 
   .info-box {
     margin: 15px 10px;
-    padding: 15px;
+    padding: 18px 12px;
   }
 
   .info-box h1 {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .info-box hr {
+    width: 70%;
   }
 
   .info-box p {
     font-size: 14px;
+    line-height: 1.6;
   }
 
   .services {
@@ -460,7 +539,135 @@ button, .service, .icon-btn {
   }
 
   .service {
-    padding: 20px 10px;
+    padding: 25px 15px;
+    min-height: 140px;
+  }
+
+  .service i {
+    font-size: 45px;
+    margin-bottom: 12px;
+  }
+
+  .service h3 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .icon-container {
+    gap: 12px;
+    padding: 5px;
+  }
+
+  .icon-btn {
+    width: 110px;
+    height: 110px;
+    font-size: 14px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .drive-link-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  .video-list-container {
+    max-height: 350px;
+    padding: 5px;
+  }
+
+  .video-btn {
+    padding: 12px;
+    font-size: 14px;
+    min-height: 55px;
+  }
+
+  .video-btn i {
+    font-size: 20px;
+  }
+
+  .video-wrapper {
+    border-width: 3px;
+    border-radius: 12px;
+  }
+
+  .swal2-popup {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 10px auto !important;
+    padding: 15px !important;
+  }
+
+  .swal2-title {
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+  }
+
+  .swal2-html-container {
+    font-size: 14px !important;
+  }
+
+  .swal2-confirm,
+  .swal2-deny,
+  .swal2-cancel {
+    padding: 8px 20px !important;
+    font-size: 14px !important;
+    min-width: 80px !important;
+  }
+
+  .swal2-actions {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 14px 10px;
+    line-height: 1.7;
+  }
+}
+
+/* ====== RESPONSIVE - SMALL MOBILE ====== */
+@media (max-width: 480px) {
+  
+  .typewriter-text {
+    font-size: 12px;
+  }
+
+  header h1 {
+    font-size: 18px;
+  }
+
+  .logo-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo-container img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logo-ring {
+    width: 95px;
+    height: 95px;
+  }
+
+  .info-box h1 {
+    font-size: 16px;
+  }
+
+  .info-box p {
+    font-size: 13px;
+  }
+
+  .service {
+    padding: 20px 12px;
+    min-height: 130px;
   }
 
   .service i {
@@ -468,21 +675,68 @@ button, .service, .icon-btn {
   }
 
   .service h3 {
-    font-size: 16px;
+    font-size: 15px;
   }
 
-  .swal2-popup {
-    width: 95% !important;
-    margin: auto !important;
+  .icon-btn {
+    width: 100px;
+    height: 100px;
+    font-size: 13px;
+  }
+
+  .video-btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .swal2-title {
+    font-size: 18px !important;
   }
 
   footer {
-    font-size: 13px;
-    padding: 12px;
+    font-size: 11px;
   }
 }
 
+/* تحسين التمرير */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0FBA50;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0a8a3a;
+}
+
+/* تحسين الأداء على الأجهزة المحمولة */
+@media (hover: none) and (pointer: coarse) {
+  .service:hover {
+    transform: none;
+  }
+  
+  .icon-btn:hover:not(.closed) {
+    background: #f0fdf4;
+    color: inherit;
+  }
+  
+  .video-btn:hover {
+    background: #fff;
+    color: #0FBA50;
+  }
+  
+  .video-btn:hover i {
+    color: #0FBA50;
+  }
+}
 
 </style>
 </head>
@@ -510,8 +764,6 @@ button, .service, .icon-btn {
   <hr>
   <p>أساتذة الطور الابتدائي - تخصص اللغة الإنجليزية</p>
 </div>
-
-
 
 </header>
 
