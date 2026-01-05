@@ -16,15 +16,23 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* --- إعدادات الخلفية --- */
 html {
   width: 100%;
   height: 100%;
-  /* الخلفية ثابتة وتغطي كامل الشاشة */
+}
+
+/* --- الحل الجذري لثبات الخلفية --- */
+/* نقوم بإنشاء طبقة خلفية ثابتة لا تتأثر بالسكرول بار */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(135deg, #e8fbf0 0%, #dcf7e6 100%);
-  background-attachment: fixed;
+  z-index: -1; /* وضعها خلف المحتوى */
   background-size: cover;
-  overflow-x: hidden;
 }
 
 body {
@@ -36,35 +44,33 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  width: 100%;
-  background: transparent;
+  background: transparent; /* الجسم شفاف */
 }
 
 /* --- تنسيق شريط التمرير (رمادي افتراضي) --- */
-/* هذا التنسيق يجعله ظاهراً بلون رمادي مريح للعين */
-
 ::-webkit-scrollbar {
-  width: 12px; /* عرض قياسي */
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* لون المسار فاتح جداً */
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1; /* لون الشريط رمادي */
-  border-radius: 10px; /* حواف ناعمة */
-  border: 3px solid #f1f1f1; /* مسافة بيضاء حول الشريط لجمالية أكثر */
+  background: #c1c1c1;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8; /* تغميق اللون عند وضع الماوس */
+  background: #a8a8a8;
 }
 
-/* --- إصلاح مشكلة القفز لأعلى الصفحة (مهم جداً) --- */
+/* --- منع القفز عند فتح النوافذ (Fix Scroll Jump) --- */
 body.swal2-shown {
-  /* تم إزالة height: 100vh التي كانت تسبب المشكلة */
-  overflow-y: hidden !important; /* منع التمرير الخلفي فقط */
+  overflow-y: auto !important; /* الإبقاء على السكرول بار ظاهراً ولكن معطلاً */
+  padding-right: 0 !important; /* منع SweetAlert من إزاحة الصفحة لليسار */
+  height: auto !important; /* منع تغيير الارتفاع */
 }
 
 /* ===========================
