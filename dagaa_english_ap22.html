@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>فضاء التكوين البيداغوجي - توقرت</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,6 +16,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
 body{
   font-family:'Cairo',sans-serif;
   margin:0;
@@ -25,6 +31,14 @@ body{
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  width: 100%;
+}
+
+/* --- إصلاح مشكلة اهتزاز الخلفية عند فتح النافذة --- */
+body.swal2-shown {
+  overflow: hidden !important; 
+  height: 100vh !important; 
+  padding-right: 0 !important;
 }
 
 /* ===========================
@@ -39,7 +53,7 @@ body{
     align-items: center;
     justify-content: center;
     position: relative;
-    z-index: 1000;
+    z-index: 10;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     padding: 10px 15px;
 }
@@ -359,18 +373,26 @@ footer{
 }
 
 /* --- تنسيق أزرار SweetAlert --- */
+.swal2-container {
+  padding: 15px !important;
+  z-index: 99999 !important;
+}
+
 .swal2-popup {
-    border-radius: 20px !important;
-    padding: 20px !important;
+  border-radius: 20px !important;
+  padding: 20px !important;
+  font-family: 'Cairo', sans-serif !important;
+  max-width: 95% !important; /* ضمان عدم تجاوز العرض */
+  width: auto !important;
 }
 
 .swal2-title {
-    font-size: 24px !important;
-    padding: 10px !important;
+  font-size: 24px !important;
+  padding: 10px !important;
 }
 
 .swal2-html-container {
-    margin: 15px 0 !important;
+  margin: 15px 0 !important;
 }
 
 .swal2-confirm{
@@ -453,25 +475,20 @@ footer{
 
 .info-box p{
   font-size: 18px;
-  font-weight: 700;
+  font-weight:700;
   margin: 0;
   line-height: 1.5;
 }
 
-/* ====== RESPONSIVE - TABLET ====== */
+/* ====== RESPONSIVE - TABLET & MOBILE ====== */
 @media (max-width: 992px) {
   .services {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 30px 15px;
   }
-
-  .swal2-popup {
-    width: 90% !important;
-  }
 }
 
-/* ====== RESPONSIVE - MOBILE ====== */
 @media (max-width: 768px) {
 
   .news-ticker-container {
@@ -595,11 +612,12 @@ footer{
     border-radius: 12px;
   }
 
+  /* --- تنسيق خاص للنوافذ المنبثقة على الجوال --- */
   .swal2-popup {
-    width: 95% !important;
+    width: 95% !important; /* ملء 95% من العرض */
     max-width: 95% !important;
-    margin: 10px auto !important;
     padding: 15px !important;
+    margin: auto !important;
   }
 
   .swal2-title {
@@ -622,6 +640,7 @@ footer{
   .swal2-actions {
     flex-wrap: wrap !important;
     gap: 8px !important;
+    justify-content: center !important;
   }
 
   footer {
@@ -633,7 +652,7 @@ footer{
 
 /* ====== RESPONSIVE - SMALL MOBILE ====== */
 @media (max-width: 480px) {
-  
+   
   .typewriter-text {
     font-size: 12px;
   }
@@ -722,17 +741,17 @@ footer{
   .service:hover {
     transform: none;
   }
-  
+   
   .icon-btn:hover:not(.closed) {
     background: #f0fdf4;
     color: inherit;
   }
-  
+   
   .video-btn:hover {
     background: #fff;
     color: #0FBA50;
   }
-  
+   
   .video-btn:hover i {
     color: #0FBA50;
   }
@@ -758,7 +777,7 @@ footer{
   </div>
 
   <h1>فضاء التكوين البيداغوجي - توقرت</h1>
-   
+    
 <div class="info-box">
   <h1>مركز التكوين متوسطة دقعة الطاهر بن الزاوي</h1>
   <hr>
@@ -857,7 +876,7 @@ function typeWriter() {
 
 function startFadeOut() {
     typeWriterElement.classList.add('fade-out');
-    
+     
     setTimeout(() => {
         typeWriterElement.innerHTML = "";
         charIndex = 0;
@@ -899,6 +918,8 @@ function checkPassword() {
     customClass: {
       confirmButton: 'green-confirm-btn'
     },
+    width: '95%',
+    maxWidth: '500px',
     cancelButtonColor: '#d33',
     preConfirm: (password) => {
       const cleanPass = password ? password.trim() : '';
@@ -921,7 +942,7 @@ function checkPassword() {
 
 
 /* =========================================
-   1. بيانات ودوال المجلدات (التربية البدنية)
+   1. بيانات ودوال المجلدات (اللغة الإنجليزية)
    ========================================= */
 
 const driveLinks = {
@@ -1005,7 +1026,8 @@ function openCourses(module){
     html: html,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: '95%',
+    maxWidth: '600px',
   });
 }
 
@@ -1029,12 +1051,13 @@ function showDriveEmbed(module, cycle) {
   Swal.fire({
     title: `ملفات الدورة ${cycle===1?'الأولى':cycle===2?'الثانية':'الثالثة'}`,
     html: `
-      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: 400px; margin-bottom: 15px;">
+      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: 50vh; margin-bottom: 15px;">
         <iframe src="${embedUrl}" style="width:100%; height:100%; border:none;"></iframe>
       </div>
       ${driveButtonHtml}
     `,
-    width: '700px',
+    width: '95%',
+    maxWidth: '800px',
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
     showDenyButton: true,
@@ -1078,7 +1101,8 @@ function openVideoList() {
     html: listHtml,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: '95%',
+    maxWidth: '600px',
   });
 }
 
@@ -1103,12 +1127,13 @@ function playVideo(url, title) {
         ></iframe>
       </div>
     `,
-    width: '800px',
+    width: '95%',
+    maxWidth: '800px',
     showCloseButton: false,
     showConfirmButton: false,
     showDenyButton: true,
     denyButtonText: 'عودة للقائمة',
-    denyButtonColor: '#0FBA50'
+    denyButtonColor: '#0FBA50',
   }).then((result) => {
     if (result.isDenied) {
       openVideoList();
