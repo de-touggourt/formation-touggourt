@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فضاء التكوين البيداغوجي - توقرت</title>
+<title>فضاء التكوين البيداغوجي</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -19,6 +19,7 @@ body{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* ===========================
@@ -35,7 +36,7 @@ body{
     position: relative;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    overflow: hidden; /* لمنع تجاوز النص */
+    overflow: hidden; /* إضافة لمنع التجاوز */
 }
 
 .typewriter-text {
@@ -45,17 +46,20 @@ body{
     opacity: 1;
     transition: opacity 1s ease-in-out;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    white-space: nowrap; /* نص في سطر واحد */
+    white-space: nowrap; /* سطر واحد */
     padding: 0 10px;
 }
 
 .typewriter-text.fade-out {
     opacity: 0;
 }
+/* =========================== */
 
 /* ===========================
    تنسيقات الشعار
    =========================== */
+
+/* حاوية الشعار */
 .logo-container {
   position: relative;
   display: inline-block;
@@ -64,6 +68,7 @@ body{
   margin-bottom: 0px; 
 }
 
+/* صورة الشعار */
 .logo-container img {
   width: 130px;
   height: 130px;
@@ -80,6 +85,7 @@ body{
   animation: pulseLogo 2.5s ease-in-out infinite;
 }
 
+/* الإطار الدائري المتقطع */
 .logo-ring {
   position: absolute;
   top: 50%;
@@ -105,10 +111,9 @@ body{
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
   50% { transform: translate(-50%, -50%) scale(1.05); }
 }
+/* =========================== */
 
-/* ===========================
-   تنسيقات الهيدر
-   =========================== */
+
 header{
   background:#0FBA50;
   color:#fff;
@@ -119,28 +124,23 @@ header{
 }
 
 header h1 {
-    margin-top: 5px;
+    margin-top: 5px; 
     margin-bottom: 10px;
-    font-size: 2em; /* حجم افتراضي */
 }
 
-header p {
-    font-size: 1.1em;
-    opacity: 0.9;
-    margin-top: 0;
-}
-
-/* ===========================
-   تنسيقات الخدمات
-   =========================== */
+/* تنسيقات الشبكة (Grid) للخدمات */
 .services{
   display:grid;
+  /* تم تعديل القيمة الصغرى لتكون 220px للكمبيوتر، وسيتم تعديلها في الميديا كويري للهاتف */
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:25px;
   padding:40px 20px;
   max-width:1000px;
   margin:auto;
+  justify-content: center;
   flex: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .service{
@@ -163,7 +163,6 @@ header p {
   color:#0e7a40;
 }
 
-/* --- تنسيقات نافذة اختيار الدورة --- */
 .icon-container{
   display:flex;
   justify-content:center;
@@ -172,8 +171,8 @@ header p {
 }
 
 .icon-btn{
-  width:130px;
-  height:130px;
+  width:140px;
+  height:140px;
   border-radius:20px;
   display:flex;
   flex-direction:column;
@@ -184,141 +183,36 @@ header p {
   background:#f0fdf4;
   cursor:pointer;
   transition:.3s;
+  text-align: center;
+  padding: 10px;
 }
 
-.icon-btn:hover:not(.closed){
+.icon-btn i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #0FBA50;
+}
+
+.icon-btn:hover{
   background:#0FBA50;
   color:#fff;
 }
-
-.icon-btn.closed{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-.badge{
-  margin-top:6px;
-  padding:4px 10px;
-  border-radius:12px;
-  font-size:13px;
-}
-.badge.open{background:#e8fbf0;color:#0e7a40;}
-.badge.closed{background:#ffebee;color:#c62828;}
-
-/* --- تنسيق زر فتح الدرايف --- */
-.drive-link-btn {
-  display: inline-block;
-  margin-top: 15px;
-  background-color: #0FBA50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-.drive-link-btn:hover {
-  background-color: #0a8a3a;
-  transform: scale(1.05);
-}
-
-/* --- تنسيقات قائمة الفيديوهات --- */
-.video-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 400px; 
-  overflow-y: auto;
-  padding: 5px;
-}
-
-.video-btn {
-  background: #fff;
-  border: 2px solid #0FBA50;
-  color: #0FBA50;
-  padding: 15px;
-  border-radius: 15px;
-  font-family: 'Cairo', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.video-btn:hover {
-  background: #0FBA50;
-  color: #fff;
-}
-
-.video-btn i {
-  font-size: 24px;
-  color: #0FBA50;
-}
-.video-btn:hover i {
-  color: #fff;
-}
-
-/* --- تنسيق مشغل الفيديو --- */
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 15px;
-  border: 4px solid #0FBA50;
-  background: #000;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.loader-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0fdf4;
-  z-index: 1;
-}
-
-.loader {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #0FBA50;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.icon-btn:hover i{
+    color: #fff;
 }
 
 footer{
   background:#0FBA50;
   color:#fff;
-  padding:16px;
-  font-weight:600;
+  padding:15px;
   border-top-left-radius:25px;
   border-top-right-radius:25px;
+  width: 100%;
   margin-top: auto;
+  position: relative;
 }
 
-/* --- تنسيق أزرار SweetAlert --- */
+/* تخصيص SweetAlert2 */
 .swal2-popup {
     border-radius: 20px !important;
 }
@@ -332,73 +226,23 @@ footer{
   font-weight:600;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
   border: none !important;
-  margin: 5px !important;
+}
+
+.swal2-deny {
+    background: #0FBA50 !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    padding: 8px 35px !important;
+    font-family: 'Cairo', sans-serif;
+    border: none !important;
 }
 
 .swal2-confirm:hover{
   background:#d6d6d6 !important;
 }
 
-.swal2-deny{
-  background:#0FBA50 !important;
-  color:#fff !important;
-  border-radius:20px !important;
-  padding:8px 35px !important;
-  font-family:'Cairo',sans-serif;
-  font-weight:600;
-  border: none !important;
-  margin: 5px !important;
-}
-.swal2-deny:hover{
-    background: #0b963f !important;
-}
-
-.swal2-cancel{
-  background:#d33 !important;
-  color:#fff !important;
-  border-radius:20px !important;
-  padding:8px 35px !important;
-  font-family:'Cairo',sans-serif;
-  font-weight:600;
-  border: none !important;
-}
-
-.green-confirm-btn {
-  background: #0FBA50 !important;
-  color: #fff !important;
-}
-
-
-.info-box{
-  max-width: 850px;
-  margin: 20px auto;
-  padding: 25px 20px;
-  border: 3px solid rgba(255,255,255,0.8);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  color: #ffffff;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-
-.info-box h1{
-  font-size: 30px;
-  font-weight: 700;
-  margin: 0 0 12px;
-}
-
-.info-box hr{
-  width: 60%;
-  margin: 10px auto;
-  border: none;
-  height: 2px;
-  background: rgba(255,255,255,0.7);
-}
-
-.info-box p{
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0;
+h3{
+  line-height:1.7;
 }
 
 /* ====================================================
@@ -426,32 +270,19 @@ footer{
     
     /* تصغير عنوان الهيدر */
     header h1 {
-        font-size: 1.4em;
+        font-size: 1.5em;
         margin-top: 10px;
     }
 
-    /* تصغير صندوق المعلومات */
-    .info-box {
-        margin: 10px;
-        padding: 15px 10px;
-        width: auto;
-    }
-    .info-box h1 {
-        font-size: 20px;
-    }
-    .info-box p {
-        font-size: 15px;
-    }
-
-    /* تحسين شبكة الخدمات للموبايل */
+    /* تحسين شبكة الخدمات للموبايل لتعرض عمودين */
     .services {
-        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); /* عمودين في الهواتف */
+        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); 
         gap: 15px;
         padding: 20px 15px;
     }
     
     .service {
-        padding: 20px 10px;
+        padding: 15px 10px;
     }
     
     .service i {
@@ -459,21 +290,23 @@ footer{
     }
     
     .service h3 {
-        font-size: 16px;
+        font-size: 15px;
     }
 
-    /* تصغير أزرار اختيار الدورة في النافذة المنبثقة */
+    /* تصغير أزرار النوافذ المنبثقة */
     .icon-btn {
         width: 100px;
         height: 100px;
-        font-size: 14px;
+        font-size: 12px;
+    }
+    .icon-btn i {
+        font-size: 24px;
     }
     
     .icon-container {
         gap: 10px;
     }
 }
-
 </style>
 </head>
 
@@ -493,92 +326,42 @@ footer{
     >
   </div>
 
-  <h1>فضاء التكوين البيداغوجي - توقرت</h1>
-   
-<div class="info-box">
-  <h1>مركز التكوين متوسطة دقعة الطاهر بن الزاوي</h1>
-  <hr>
-  <p>أساتذة الطور الابتدائي - تخصص اللغة الإنجليزية</p>
-</div>
-
-
-
+  <h1>فضاء التكوين البيداغوجي للأساتذة الجدد</h1>
 </header>
 
 <section class="services">
-
-  <div class="service" onclick="openCourses('didactique')">
-    <i class="fa-solid fa-chalkboard"></i>
-    <h3>تعليمية مادة التخصص</h3>
-  </div>
-
-  <div class="service" onclick="openCourses('tasyire')">
-    <i class="fa-solid fa-users-gear"></i>
-    <h3>تقنيات تسيير القسم</h3>
-  </div>
-
-  <div class="service" onclick="openCourses('takwime')">
-    <i class="fa-solid fa-clipboard-check"></i>
-    <h3>التقويم و المعالجة البيداغوجية</h3>
-  </div>
-
-  <div class="service" onclick="openCourses('informatique')">
-    <i class="fa-solid fa-computer"></i>
-    <h3>الإعلام الآلي</h3>
-  </div>
-
-  <div class="service" onclick="openCourses('nidame')">
+  <div class="service" onclick="openCenter(1)">
     <i class="fa-solid fa-school"></i>
-    <h3>النظام التربوي و المناهج</h3>
+    <h3>مركز التكوين<br>ثانوية عبد الرحمان الكواكبي</h3>
   </div>
 
-  <div class="service" onclick="openCourses('akhlakiyate')">
-    <i class="fa-solid fa-scale-balanced"></i>
-    <h3>أخلاقيات المهنة</h3>
+  <div class="service" onclick="openCenter(2)">
+    <i class="fa-solid fa-school"></i>
+     <h3>مركز التكوين<br>متوسطة دقعة الطاهر بن الزاوي</h3>
   </div>
 
-  <div class="service" onclick="openCourses('handasa')">
-    <i class="fa-solid fa-network-wired"></i>
-    <h3>هندسة التكوين</h3>
+  <div class="service" onclick="openCenter(3)">
+    <i class="fa-solid fa-school"></i>
+     <h3>مركز التكوين<br>ثانوية البشير الإبراهيمي</h3>
   </div>
 
-  <div class="service" onclick="openCourses('wasata')">
-    <i class="fa-solid fa-handshake"></i>
-    <h3>الوساطة المدرسية</h3>
+  <div class="service" onclick="openCenter(4)">
+    <i class="fa-solid fa-school"></i>
+    <h3>مركز التكوين<br>متوسطة أحمد زبانة</h3>
   </div>
 
-  <div class="service" onclick="openCourses('tachri')">
-    <i class="fa-solid fa-gavel"></i>
-    <h3>التشريع المدرسي</h3>
+  <div class="service" onclick="openCenter(5)">
+    <i class="fa-solid fa-school"></i>
+    <h3>مركز التكوين<br>ثانوية لحسيني محمد</h3>
   </div>
-
-  <div class="service" onclick="openCourses('psycho')">
-    <i class="fa-solid fa-brain"></i>
-    <h3>علوم التربية وعلم النفس</h3>
-  </div>
-
-  <div class="service" onclick="handleLessonsClick()">
-    <i class="fa-solid fa-clapperboard"></i>
-    <h3>دروس تطبيقية</h3>
-  </div>
-
 </section>
 
-<footer>مديرية التربية لولاية توقرت | فضاء التكوين البيداغوجي | جميع الحقوق محفوظة  © 2025</footer>
+<footer>© 2025 فضاء التكوين</footer>
 
 <script>
-/* ==========================================
-   إعدادات التحكم (عدّل هنا 👇)
-   ========================================== */
-   
-// 👇 اجعل هذه القيمة false لإخفاء الزر، أو true لإظهاره
-const SHOW_DRIVE_BUTTON = false; 
-
 // ==========================================
-
-/* ==========================================
-   🔡 كود الكتابة السلسة
-   ========================================== */
+// 🔡 كود الكتابة السلسة
+// ==========================================
 const textToType = "الجمهورية الجزائرية الديمقراطية الشعبية | وزارة التربية الوطنية | مديرية التربية لولاية توقرت | مصلحة التفتيش والتكوين";
 const typeWriterElement = document.getElementById('typewriter-text');
 let charIndex = 0;
@@ -604,265 +387,192 @@ function startFadeOut() {
     }, 1000);
 }
 
-/* =======================================================
-   🔴🔴 إعدادات الحماية (الرقم السري) 🔴🔴
-   ======================================================= */
-   
-const ENABLE_PASSWORD = true; 
-const SECURE_CODE = 'ZmVoQDIwMjY=';
-
-/* ======================================================= */
-
-function handleLessonsClick() {
-  if (ENABLE_PASSWORD) {
-    checkPassword();
-  } else {
-    openVideoList();
-  }
-}
-
-function checkPassword() {
-  Swal.fire({
-    title: 'منطقة محمية',
-    text: 'يرجى إدخال الرقم السري لفتح الدروس التطبيقية',
-    input: 'password', 
-    inputAttributes: {
-      autocapitalize: 'off',
-      autocorrect: 'off',
-      placeholder: '••••••••'
-    },
-    showCancelButton: true,
-    confirmButtonText: 'دخول',
-    cancelButtonText: 'إلغاء',
-    customClass: {
-      confirmButton: 'green-confirm-btn'
-    },
-    cancelButtonColor: '#d33',
-    preConfirm: (password) => {
-      const cleanPass = password ? password.trim() : '';
-      try {
-        if (btoa(cleanPass) === SECURE_CODE) {
-          return true;
-        } else {
-          Swal.showValidationMessage('كلمة المرور خاطئة، حاول مجدداً');
-        }
-      } catch (e) {
-        Swal.showValidationMessage('حدث خطأ');
-      }
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      openVideoList();
-    }
-  });
-}
-
-
-/* =========================================
-   1. بيانات ودوال المجلدات (التربية البدنية)
-   ========================================= */
-
-const driveLinks = {
-  didactique:{1:"https://drive.google.com/drive/folders/15IxfJWDEw9C_yfRIIs5ylxU0ZGGZAVNE?usp=sharing",
-              2:"https://drive.google.com/drive/folders/1wfVk0Ht1r7EmNvlZYLfDQTeBCMGNZ3uP?usp=sharing",
-              3:"https://drive.google.com/drive/folders/1afNDsS7pwzY4IogL8j71VZFhSd8jQy3J?usp=sharing"},
-
-  tasyire:{1:"https://drive.google.com/drive/folders/1Cer2vf6CPlIYkqEWTuJQKeL0WKDaJIQA?usp=sharing",
-           2:"https://drive.google.com/drive/folders/1DMXEzhmW5qeDcCIkinHUu3sODS8GMuBw?usp=sharing",
-           3:"https://drive.google.com/drive/folders/1eHZK_AhNE1B3ClVKoAFI86FD3_IjipBq?usp=sharing"},
-
-  takwime:{1:"https://drive.google.com/drive/folders/10Tlnvz31vm8vXbQwITeM9Sxa4fj3T4Tb?usp=sharing",
-           2:"https://drive.google.com/drive/folders/1kcYwa5kQulcZGl80WWSblyi2P91jj89m?usp=sharing",
-           3:"https://drive.google.com/drive/folders/1nYDQyVw1c5qsB5bP8PcIXQX_KzV7QkZo?usp=sharing"},
-
-  nidame:{1:"https://drive.google.com/drive/folders/1Xs-O0OFvtGrCz4wjxU526yPTio9HUrRK?usp=sharing",
-          2:"https://drive.google.com/drive/folders/1zK8MettMqztZ6o-LsTBy-agee71IrGxG?usp=sharing",
-          3:"https://drive.google.com/drive/folders/1xlq9QXHbFHay7_WFSV8NZpieuPXtSdxD?usp=sharing"},
-
-  akhlakiyate:{1:"https://drive.google.com/drive/folders/1559-c406V7wsBsz5fw5OHz9jaE8GDh9q?usp=sharing",
-               2:"https://drive.google.com/drive/folders/11D8Dah6NPwVvZvRqIPhkEL_Wrhi5ftiX?usp=sharing",
-               3:"https://drive.google.com/drive/folders/1ZjcVDA3ObBve2Qe5uueQRJQ71wqN5yb0?usp=sharing"},
-
-  handasa:{1:"https://drive.google.com/drive/folders/1YjZ1C8Sp_DRzJHIG-BFN-dcEwxjDnjqx?usp=sharing",
-           2:"https://drive.google.com/drive/folders/11RiHPfhRX_zlEm9PrtcyP_Leye_O9UJ-?usp=sharing",
-           3:"https://drive.google.com/drive/folders/1VoUtVMVLfTHQUWciWKjkTp-oAL51QnDc?usp=sharing"},
-
-  wasata:{1:"https://drive.google.com/drive/folders/1TTxKQWUxxvohYRWc0N8Uf23NlHWh7nVX?usp=sharing",
-          2:"https://drive.google.com/drive/folders/1jhnW1i8vzhOckIPalWsqoCu-FQ71jjyY?usp=sharing",
-          3:"https://drive.google.com/drive/folders/1wXOiwpl5XnfOXJDxaW7ok5vl0xvTHDmv?usp=sharing"},
-
-  tachri:{1:"https://drive.google.com/drive/folders/1ys2c2v5fkz7GFTzUOTxmbEAWRYvomb2x?usp=sharing",
-          2:"https://drive.google.com/drive/folders/1xmAHc9X9OcuhmSON3IZgrS1PHsKUVoR-?usp=sharing",
-          3:"https://drive.google.com/drive/folders/1i3Kt9n_3yCgzfRmRCZbxtEsjwOr2Affe?usp=sharing"},
-
-  psycho:{1:"https://drive.google.com/drive/folders/1yE5TM0JugX6H3kkwjK-YgmzA_JV42aCn?usp=sharing",
-          2:"https://drive.google.com/drive/folders/1RECS840svN61GkNpebbbJOUr-7LAXbGZ?usp=sharing",
-          3:"https://drive.google.com/drive/folders/1zUxWLKxP7FwXFg0Kuh8k6usOh1OaZVU5?usp=sharing"},
-
-  informatique:{1:"https://drive.google.com/drive/folders/1GePuEu6dyHMFg0jgywhyEzdpqKYivogZ?usp=sharing",
-                2:"https://drive.google.com/drive/folders/10gBH0FmkhboD-OriFMsKj1J-0sncr4KJ?usp=sharing",
-                3:"https://drive.google.com/drive/folders/1DSG0p81Tlv5qKUg2FGLy3MNWa1A8_jxw?usp=sharing"}
-};
-
-const globalCycleStatus = {1:true, 2:false, 3:false};
-const moduleCycleStatus = {
-  didactique:{1:true,2:true,3:true}, tasyire:{1:true,2:true,3:true}, takwime:{1:true,2:true,3:true},
-  nidame:{1:true,2:true,3:true}, akhlakiyate:{1:true,2:true,3:true}, handasa:{1:true,2:true,3:true},
-  wasata:{1:true,2:true,3:true}, tachri:{1:true,2:true,3:true}, psycho:{1:true,2:true,3:true},
-  informatique:{1:true,2:true,3:true}
-};
-
-function isCycleOpen(module,cycle){
-  if(!globalCycleStatus[cycle]) return false;
-  return moduleCycleStatus[module][cycle];
-}
-
-function getFolderId(url) {
-    if (!url) return null;
-    const match = url.match(/folders\/([a-zA-Z0-9-_]+)/);
-    return match ? match[1] : null;
-}
-
-// دالة مساعدة لتحديد العرض المناسب للهاتف أو الكمبيوتر
-function getPopupWidth(defaultWidth) {
-    return window.innerWidth < 768 ? '95%' : defaultWidth;
-}
-
-function openCourses(module){
-  let html='<div class="icon-container">';
-  for(let i=1;i<=3;i++){
-    const open=isCycleOpen(module,i);
-    html+=`
-      <div class="icon-btn ${open?'':'closed'}"
-        onclick="${open?`showDriveEmbed('${module}',${i})`:''}">
-        الدورة ${i===1?'الأولى':i===2?'الثانية':'الثالثة'}
-        <span class="badge ${open?'open':'closed'}">
-          ${open?'مفتوحة':'مغلقة'}
-        </span>
-      </div>`;
-  }
-  html+='</div>';
-
-  Swal.fire({
-    title: 'اختر الدورة',
-    html: html,
-    showConfirmButton: true,
-    confirmButtonText: 'إغلاق',
-    width: getPopupWidth('600px') // تم تعديل العرض ليكون متجاوباً
-  });
-}
-
-function showDriveEmbed(module, cycle) {
-  const url = driveLinks[module][cycle];
-  const folderId = getFolderId(url);
-
-  if (!url || !folderId) {
-    Swal.fire('تنبيه', 'الرابط غير متوفر حالياً', 'info');
-    return;
-  }
-
-  const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
-  const driveButtonHtml = SHOW_DRIVE_BUTTON ? 
-    `<a href="${url}" target="_blank" class="drive-link-btn">
-        <i class="fa-brands fa-google-drive"></i> فتح في Google Drive
-     </a>` : '';
-
-  // تحديد ارتفاع مناسب للموبايل
-  const heightStyle = window.innerWidth < 768 ? '300px' : '400px';
-
-  Swal.fire({
-    title: `ملفات الدورة ${cycle===1?'الأولى':cycle===2?'الثانية':'الثالثة'}`,
-    html: `
-      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: ${heightStyle}; margin-bottom: 15px;">
-        <iframe src="${embedUrl}" style="width:100%; height:100%; border:none;"></iframe>
-      </div>
-      ${driveButtonHtml}
-    `,
-    width: getPopupWidth('700px'), // تم تعديل العرض ليكون متجاوباً
-    showConfirmButton: true,
-    confirmButtonText: 'إغلاق',
-    showDenyButton: true,
-    denyButtonText: 'عودة للخلف',
-  }).then((result) => {
-    if (result.isDenied) {
-      openCourses(module); 
-    }
-  });
-}
-
-
-/* =======================================================
-   3. كود الدروس التطبيقية (Google Drive)
-   ======================================================= */
-
-const videos = [
-  { title: "الدرس التطبيقي الأول:", url: "" }
-];
-
-function convertToPreviewUrl(url) {
-  return url.replace(/\/view.*/, '/preview');
-}
-
-function openVideoList() {
-  let listHtml = '<div class="video-list-container">';
-  
-  videos.forEach((video) => {
-    listHtml += `
-      <div class="video-btn" onclick="playVideo('${video.url}', '${video.title}')">
-        <span>${video.title}</span>
-       <i class="fa-solid fa-circle-play"></i>
-      </div>
-    `;
-  });
-
-  listHtml += '</div>';
-
-  Swal.fire({
-    title: 'الدروس التطبيقية',
-    html: listHtml,
-    showConfirmButton: true,
-    confirmButtonText: 'إغلاق',
-    width: getPopupWidth('600px') // تم تعديل العرض ليكون متجاوباً
-  });
-}
-
-function playVideo(url, title) {
-  if(!url) return;
-  const previewUrl = convertToPreviewUrl(url);
-
-  Swal.fire({
-    title: title,
-    html: `
-      <div class="video-wrapper">
-        <div class="loader-container" id="videoLoader">
-          <div class="loader"></div>
-        </div>
-        <iframe 
-          src="${previewUrl}" 
-          frameborder="0" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen
-          onload="document.getElementById('videoLoader').style.display='none';"
-          style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2;"
-        ></iframe>
-      </div>
-    `,
-    width: getPopupWidth('800px'), // تم تعديل العرض ليكون متجاوباً
-    showCloseButton: false,
-    showConfirmButton: false,
-    showDenyButton: true,
-    denyButtonText: 'عودة للقائمة',
-    denyButtonColor: '#0FBA50'
-  }).then((result) => {
-    if (result.isDenied) {
-      openVideoList();
-    }
-  });
-}
-
 window.onload = function() {
     typeWriter();
 };
+
+// ==========================================
+// 🔗 قاعدة بيانات الروابط والوظائف الأخرى
+// ==========================================
+const centerLinks = {
+    1: { 'arabic': 'kawakibi-arabic.html', 'french': 'kawakibi-french.html' },
+    2: { 'english': 'dakaa-english.html', 'sport': 'dakaa-sport.html' },
+    3: { 'french': 'ibrahimi-french.html', 'english': 'ibrahimi-english.html', 'sport': 'ibrahimi-sport.html', 'others': 'ibrahimi-others.html' },
+    4: {
+        'primary': { 'arabic': 'zabana-prim-arabic.html', 'french': 'zabana-prim-french.html', 'english': 'zabana-prim-english.html', 'sport': 'zabana-prim-sport.html' },
+        'middle_secondary': { 'french': 'zabana-ms-french.html', 'english': 'zabana-ms-english.html', 'sport': 'zabana-ms-sport.html', 'others': 'zabana-ms-others.html' }
+    },
+    5: {
+        'primary': { 'arabic': 'lahsini-prim-arabic.html', 'french': 'lahsini-prim-french.html', 'english': 'lahsini-prim-english.html', 'sport': 'lahsini-prim-sport.html' },
+        'middle_secondary': { 'french': 'lahsini-ms-french.html', 'english': 'lahsini-ms-english.html', 'sport': 'lahsini-ms-sport.html', 'others': 'lahsini-ms-others.html' }
+    }
+};
+
+// دالة مساعدة لتحديد عرض النافذة حسب الجهاز
+function getPopupWidth() {
+    return window.innerWidth < 768 ? '95%' : '600px';
+}
+
+function openCenter(centerId) {
+  let html = '<div class="icon-container">';
+  let popupTitle = '';
+
+  if (centerId === 1) {
+    popupTitle = 'أساتذة الطور الإبتدائي - اختر التخصص:';
+    html += `
+      <div class="icon-btn" onclick="openLink(1, 'arabic')">
+        <i class="fa-solid fa-book-open"></i> تخصص اللغة العربية
+      </div>
+      <div class="icon-btn" onclick="openLink(1, 'french')">
+       <i class="fa-solid fa-language"></i> تخصص اللغة الفرنسية
+      </div>`;
+  } 
+  else if (centerId === 2) {
+    popupTitle = 'أساتذة الطور الإبتدائي - اختر التخصص:';
+    html += `
+      <div class="icon-btn" onclick="openLink(2, 'english')">
+        <i class="fa-solid fa-font"></i> تخصص اللغة الإنجليزية
+      </div>
+      <div class="icon-btn" onclick="openLink(2, 'sport')">
+        <i class="fa-solid fa-person-running"></i> تخصص التربية البدنية والرياضة
+      </div>`;
+  } 
+  else if (centerId === 3) {
+      popupTitle = 'أساتذة الطور المتوسط والثانوي - اختر التخصص:';
+      html += `
+        <div class="icon-btn" onclick="openLink(3, 'french')">
+            <i class="fa-solid fa-language"></i> اللغة الفرنسية
+        </div>
+        <div class="icon-btn" onclick="openLink(3, 'english')">
+            <i class="fa-solid fa-font"></i> اللغة الإنجليزية
+        </div>
+        <div class="icon-btn" onclick="openLink(3, 'sport')">
+            <i class="fa-solid fa-person-running"></i> التربية البدنية والرياضة
+        </div>
+        <div class="icon-btn" onclick="openLink(3, 'others')">
+            <i class="fa-solid fa-layer-group"></i> باقي التخصصات
+        </div>`;
+  } 
+  else if (centerId === 4) {
+      popupTitle = 'اختر الطور:';
+      html += `
+        <div class="icon-btn" onclick="openSubMenu('primary', 4)">
+          <i class="fa-solid fa-child-reaching"></i>
+          الطور الابتدائي
+        </div>
+        <div class="icon-btn" onclick="openSubMenu('middle_secondary', 4)">
+          <i class="fa-solid fa-user-graduate"></i>
+          الطور المتوسط والثانوي
+        </div>`;
+  }
+  else if (centerId === 5) {
+      popupTitle = 'اختر الطور:';
+      html += `
+        <div class="icon-btn" onclick="openSubMenu('primary', 5)">
+          <i class="fa-solid fa-child-reaching"></i>
+          الطور الابتدائي
+        </div>
+        <div class="icon-btn" onclick="openSubMenu('middle_secondary', 5)">
+          <i class="fa-solid fa-user-graduate"></i>
+          الطور المتوسط والثانوي
+        </div>`;
+  }
+
+  html += '</div>';
+
+  Swal.fire({
+    title: popupTitle,
+    html: html,
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    confirmButtonColor: '#e0e0e0',
+    showCloseButton: false,
+    width: getPopupWidth() // تم التعديل للتجاوب
+  });
+}
+
+function openSubMenu(level, parentId) {
+    let html = '<div class="icon-container">';
+    let title = '';
+
+    if (level === 'primary') {
+        title = 'أساتذة الطور الابتدائي - اختر التخصص:';
+        html += `
+            <div class="icon-btn" onclick="openLink(${parentId}, 'arabic', 'primary')">
+                <i class="fa-solid fa-book-open"></i> اللغة العربية
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'french', 'primary')">
+                <i class="fa-solid fa-language"></i> اللغة الفرنسية
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'english', 'primary')">
+                <i class="fa-solid fa-font"></i> اللغة الإنجليزية
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'sport', 'primary')">
+                <i class="fa-solid fa-person-running"></i> التربية البدنية والرياضة
+            </div>
+        `;
+    } else if (level === 'middle_secondary') {
+        title = 'أساتذة الطور المتوسط والثانوي - اختر التخصص:';
+        html += `
+            <div class="icon-btn" onclick="openLink(${parentId}, 'french', 'middle_secondary')">
+                <i class="fa-solid fa-language"></i> اللغة الفرنسية
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'english', 'middle_secondary')">
+                <i class="fa-solid fa-font"></i> اللغة الإنجليزية
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'sport', 'middle_secondary')">
+                <i class="fa-solid fa-person-running"></i> التربية البدنية والرياضة
+            </div>
+            <div class="icon-btn" onclick="openLink(${parentId}, 'others', 'middle_secondary')">
+                <i class="fa-solid fa-layer-group"></i> باقي التخصصات
+            </div>
+        `;
+    }
+
+    html += '</div>';
+
+    Swal.fire({
+        title: title,
+        html: html,
+        showConfirmButton: true,
+        confirmButtonText: 'إغلاق',
+        confirmButtonColor: '#e0e0e0',
+        showDenyButton: true,
+        denyButtonText: 'عودة للخلف',
+        denyButtonColor: '#0FBA50',
+        showCloseButton: false,
+        width: getPopupWidth() // تم التعديل للتجاوب
+    }).then((result) => {
+        if (result.isDenied) {
+            openCenter(parentId);
+        }
+    });
+}
+
+function openLink(centerId, type, level = null) {
+    let url = '';
+    const centerData = centerLinks[centerId];
+
+    if (centerData) {
+        if (level && centerData[level]) {
+            url = centerData[level][type];
+        } else if (!level && centerData[type]) {
+            url = centerData[type];
+        }
+    }
+
+    if(url && url !== '#') {
+        window.location.href = url;
+    } else {
+        Swal.fire({
+            icon: 'info',
+            title: 'قريباً',
+            text: 'سيتم إضافة الرابط قريباً',
+            confirmButtonColor: '#0FBA50',
+            width: getPopupWidth() // تم التعديل للتجاوب
+        });
+    }
+}
 </script>
 
 </body>
