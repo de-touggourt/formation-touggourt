@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>فضاء التكوين البيداغوجي</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,11 @@
 
 <style>
 /* 1. تنسيقات الجسم */
+* {
+    box-sizing: border-box; /* ضروري لضبط الأبعاد */
+    -webkit-tap-highlight-color: transparent; /* إزالة لون النقر الافتراضي في الموبايل */
+}
+
 body{
   font-family:'Cairo',sans-serif;
   margin:0;
@@ -45,6 +50,10 @@ body{
     opacity: 1;
     transition: opacity 1s ease-in-out;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    white-space: nowrap; /* منع النص من الالتفاف */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 95%;
 }
 
 .typewriter-text.fade-out {
@@ -56,18 +65,15 @@ body{
    تنسيقات الشعار
    =========================== */
 
-/* حاوية الشعار */
 .logo-container {
   position: relative;
   display: inline-block;
   width: 160px;
   height: 160px;
-  
-  /* 👇 تم تقليل الهامش السفلي من 10px إلى 0 👇 */
   margin-bottom: 0px; 
+  transition: transform 0.3s ease; /* حركة سلسة عند تغيير الحجم */
 }
 
-/* صورة الشعار */
 .logo-container img {
   width: 130px;
   height: 130px;
@@ -84,7 +90,6 @@ body{
   animation: pulseLogo 2.5s ease-in-out infinite;
 }
 
-/* الإطار الدائري المتقطع */
 .logo-ring {
   position: absolute;
   top: 50%;
@@ -94,8 +99,6 @@ body{
   border-radius: 50%;
   border: 3px dashed #fff; 
   background: transparent;
-  mask: none;
-  -webkit-mask: none;
   transform: translate(-50%, -50%);
   animation: rotateRing 10s linear infinite;
   z-index: 1;
@@ -122,15 +125,17 @@ header{
   box-shadow:0 4px 10px rgba(0,0,0,.2);
 }
 
-/* 👇 تم إضافة تنسيق خاص للعنوان لتقليل الهامش العلوي 👇 */
 header h1 {
-    margin-top: 5px; /* مسافة صغيرة جداً من الأعلى */
+    margin-top: 5px;
     margin-bottom: 10px;
+    font-size: 1.8rem; /* حجم افتراضي */
+    padding: 0 10px;
 }
 
 .services{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  /* تحسين الشبكة للتجاوب: عرض البطاقة لا يقل عن 250 بكسل */
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:25px;
   padding:40px 20px;
   max-width:1000px;
@@ -138,7 +143,6 @@ header h1 {
   justify-content: center;
   flex: 1;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .service{
@@ -148,8 +152,13 @@ header h1 {
   cursor:pointer;
   box-shadow:0 4px 10px rgba(0,0,0,.1);
   transition:.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.service:hover{transform:translateY(-8px) scale(1.05);}
+.service:hover{transform:translateY(-8px) scale(1.02);}
+.service:active{transform:scale(0.98);} /* تأثير الضغط للموبايل */
 
 .service i{
   font-size:55px;
@@ -159,30 +168,35 @@ header h1 {
 
 .service h3{
   color:#0e7a40;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
+/* تنسيقات الأزرار داخل النافذة المنبثقة */
 .icon-container{
   display:flex;
   justify-content:center;
-  gap:20px;
+  gap:15px;
   flex-wrap:wrap;
+  width: 100%;
 }
 
 .icon-btn{
-  width:140px;
-  height:140px;
-  border-radius:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  border:2px solid #0FBA50;
-  background:#f0fdf4;
-  cursor:pointer;
-  transition:.3s;
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 2px solid #0FBA50;
+  background: #f0fdf4;
+  cursor: pointer;
+  transition: .3s;
   text-align: center;
   padding: 10px;
+  font-size: 0.95rem;
 }
 
 .icon-btn i {
@@ -191,11 +205,11 @@ header h1 {
     color: #0FBA50;
 }
 
-.icon-btn:hover{
+.icon-btn:hover, .icon-btn:active {
   background:#0FBA50;
   color:#fff;
 }
-.icon-btn:hover i{
+.icon-btn:hover i, .icon-btn:active i {
     color: #fff;
 }
 
@@ -208,32 +222,125 @@ footer{
   width: 100%;
   margin-top: auto;
   position: relative;
+  font-size: 0.9rem;
+}
+
+/* تنسيقات SweetAlert المخصصة */
+.swal2-popup {
+    border-radius: 20px !important;
+    padding: 1.5em !important;
 }
 
 .swal2-confirm{
   background:#939393 !important;
   color:#333 !important;
   border-radius:20px !important;
-  padding:8px 35px !important;
+  padding:10px 30px !important;
   font-family:'Cairo',sans-serif;
   font-weight:600;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
+  margin: 5px !important;
 }
 
 .swal2-deny {
     background: #0FBA50 !important;
     color: #fff !important;
     border-radius: 20px !important;
-    padding: 8px 35px !important;
+    padding: 10px 30px !important;
     font-family: 'Cairo', sans-serif;
-}
-
-.swal2-confirm:hover{
-  background:#d6d6d6 !important;
+    margin: 5px !important;
 }
 
 h3{
-  line-height:1.7;
+  line-height:1.6;
+}
+
+/* ============================================================
+   📱 تحسينات التجاوب (Media Queries) - الجزء الأهم للهاتف
+   ============================================================ */
+@media (max-width: 768px) {
+    /* تصغير الشعار قليلاً في الهواتف */
+    .logo-container {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 5px;
+    }
+    .logo-container img {
+        width: 100px;
+        height: 100px;
+    }
+    .logo-ring {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* تصغير خط العنوان */
+    header h1 {
+        font-size: 1.3rem;
+        line-height: 1.4;
+    }
+
+    /* جعل البطاقات تأخذ عرض الشاشة بالكامل تقريباً مع هوامش */
+    .services {
+        padding: 20px 15px;
+        gap: 15px;
+        grid-template-columns: 1fr; /* عمود واحد في الموبايل */
+    }
+
+    .service {
+        flex-direction: row; /* الأيقونة بجانب النص في الموبايل */
+        text-align: right;
+        padding: 20px;
+        gap: 15px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .service i {
+        font-size: 40px;
+        margin-bottom: 0;
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .service h3 {
+        font-size: 1rem;
+        text-align: right;
+    }
+
+    /* تحسين أزرار النافذة المنبثقة في الموبايل */
+    .icon-btn {
+        width: 46%; /* زرين في كل صف */
+        height: 120px; /* ارتفاع أقل قليلاً */
+        font-size: 0.85rem;
+    }
+    
+    .icon-btn i {
+        font-size: 26px;
+    }
+
+    /* شريط الأخبار */
+    .typewriter-text {
+        font-size: 14px;
+    }
+    
+    footer {
+        font-size: 0.8rem;
+        padding: 12px;
+    }
+}
+
+/* للشاشات الصغيرة جداً */
+@media (max-width: 380px) {
+    .icon-btn {
+        width: 100%; /* زر واحد في الصف */
+        flex-direction: row; /* الأيقونة بجانب النص */
+        height: 60px;
+        gap: 15px;
+    }
+    .icon-btn i {
+        margin-bottom: 0;
+    }
 }
 </style>
 </head>
@@ -323,17 +430,28 @@ window.onload = function() {
 // 🔗 قاعدة بيانات الروابط والوظائف الأخرى
 // ==========================================
 const centerLinks = {
-    1: { 'arabic': 'kawakibi-arabic.html', 'french': 'kawakibi-french.html' },
-    2: { 'english': 'dakaa-english.html', 'sport': 'dakaa-sport.html' },
-    3: { 'french': 'ibrahimi-french.html', 'english': 'ibrahimi-english.html', 'sport': 'ibrahimi-sport.html', 'others': 'ibrahimi-others.html' },
+    1: { 'arabic': 'kawakibi_arab_ap.html', 'french': 'kawakibi_france_ap.html' },
+    2: { 'english': 'dagaa_english_ap_code.html', 'sport': 'dagaa_sport_ap_code.html' },
+    3: { 'french': 'bachir_france_amas.html', 'english': 'bachir_english_amas.html', 'sport': 'ibrahimi-sport.html', 'others': 'ibrahimi-others.html' },
     4: {
-        'primary': { 'arabic': 'zabana-prim-arabic.html', 'french': 'zabana-prim-french.html', 'english': 'zabana-prim-english.html', 'sport': 'zabana-prim-sport.html' },
-        'middle_secondary': { 'french': 'zabana-ms-french.html', 'english': 'zabana-ms-english.html', 'sport': 'zabana-ms-sport.html', 'others': 'zabana-ms-others.html' }
+        'primary': { 'arabic': 'zabana_arab_ap.html', 'french': 'zabana_france_ap.html', 'english': 'zabana_english_ap.html', 'sport': 'zabana_sport_ap.html' },
+        'middle_secondary': { 'french': 'zabana_france_amas.html', 'english': 'zabana_english_amas.html', 'sport': 'zabana_sport_amas.html', 'others': 'zabana_other_amas.html' }
     },
     5: {
-        'primary': { 'arabic': 'lahsini-prim-arabic.html', 'french': 'lahsini-prim-french.html', 'english': 'lahsini-prim-english.html', 'sport': 'lahsini-prim-sport.html' },
-        'middle_secondary': { 'french': 'lahsini-ms-french.html', 'english': 'lahsini-ms-english.html', 'sport': 'lahsini-ms-sport.html', 'others': 'lahsini-ms-others.html' }
+        'primary': { 'arabic': 'lahcini_arab_ap.html', 'french': 'lahcini_france_ap.html', 'english': 'lahcini_english_ap.html', 'sport': 'lahcini_sport_ap.html' },
+        'middle_secondary': { 'french': 'lahcini_france_amas.html', 'english': 'lahcini_english_amas.html', 'sport': 'lahcini_sport_amas.html', 'others': 'lahcini_other_amas.html' }
     }
+};
+
+// تم تعديل إعدادات النافذة لتكون متجاوبة (95% من العرض بحد أقصى 600px)
+const swalConfig = {
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    confirmButtonColor: '#e0e0e0',
+    showCloseButton: false,
+    width: '95%', // عرض متجاوب
+    maxWidth: '600px', // أقصى عرض للكمبيوتر
+    scrollbarPadding: false
 };
 
 function openCenter(centerId) {
@@ -404,13 +522,9 @@ function openCenter(centerId) {
   html += '</div>';
 
   Swal.fire({
+    ...swalConfig, // استخدام الإعدادات المتجاوبة
     title: popupTitle,
-    html: html,
-    showConfirmButton: true,
-    confirmButtonText: 'إغلاق',
-    confirmButtonColor: '#e0e0e0',
-    showCloseButton: false,
-    width: '600px'
+    html: html
   });
 }
 
@@ -455,16 +569,12 @@ function openSubMenu(level, parentId) {
     html += '</div>';
 
     Swal.fire({
+        ...swalConfig,
         title: title,
         html: html,
-        showConfirmButton: true,
-        confirmButtonText: 'إغلاق',
-        confirmButtonColor: '#e0e0e0',
         showDenyButton: true,
         denyButtonText: 'عودة للخلف',
         denyButtonColor: '#0FBA50',
-        showCloseButton: false,
-        width: '600px'
     }).then((result) => {
         if (result.isDenied) {
             openCenter(parentId);
