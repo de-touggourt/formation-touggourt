@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>فضاء التكوين البيداغوجي</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,6 +16,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
 body{
   font-family:'Cairo',sans-serif;
   margin:0;
@@ -25,6 +31,14 @@ body{
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+body.swal2-shown {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
 }
 
 /* ===========================
@@ -359,6 +373,10 @@ footer{
 }
 
 /* --- تنسيق أزرار SweetAlert --- */
+.swal2-container {
+  zoom: 1 !important;
+}
+
 .swal2-popup {
     border-radius: 20px !important;
     padding: 20px !important;
@@ -911,6 +929,14 @@ function checkPassword() {
       } catch (e) {
         Swal.showValidationMessage('حدث خطأ');
       }
+    },
+    didOpen: () => {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    },
+    willClose: () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
     }
   }).then((result) => {
     if (result.isConfirmed) {
@@ -1006,7 +1032,15 @@ function openCourses(module){
     html: html,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: '600px',
+    didOpen: () => {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    },
+    willClose: () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   });
 }
 
@@ -1040,6 +1074,14 @@ function showDriveEmbed(module, cycle) {
     confirmButtonText: 'إغلاق',
     showDenyButton: true,
     denyButtonText: 'عودة للخلف',
+    didOpen: () => {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    },
+    willClose: () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   }).then((result) => {
     if (result.isDenied) {
       openCourses(module); 
@@ -1079,7 +1121,15 @@ function openVideoList() {
     html: listHtml,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '600px'
+    width: '600px',
+    didOpen: () => {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    },
+    willClose: () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   });
 }
 
@@ -1109,7 +1159,15 @@ function playVideo(url, title) {
     showConfirmButton: false,
     showDenyButton: true,
     denyButtonText: 'عودة للقائمة',
-    denyButtonColor: '#0FBA50'
+    denyButtonColor: '#0FBA50',
+    didOpen: () => {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    },
+    willClose: () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   }).then((result) => {
     if (result.isDenied) {
       openVideoList();
