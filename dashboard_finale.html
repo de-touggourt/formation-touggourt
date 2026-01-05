@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فضاء التكوين البيداغوجي</title>
+<title>فضاء التكوين البيداغوجي - توقرت</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -23,23 +23,19 @@ body{
 }
 
 /* ===========================
-   تعديل شريط الأخبار (ليتلاءم مع الهاتف)
+   شريط الأخبار
    =========================== */
 .news-ticker-container {
     background-color: #085d28;
     color: #fff;
     width: 100%;
-    /* تم تغيير height إلى min-height للسماح بالتمدد */
-    min-height: 50px; 
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    /* إضافة حواشي داخلية لضمان عدم التصاق النص بالحواف */
-    padding: 5px 15px; 
-    box-sizing: border-box;
 }
 
 .typewriter-text {
@@ -49,29 +45,10 @@ body{
     opacity: 1;
     transition: opacity 1s ease-in-out;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    /* خصائص لضمان التفاف النص */
-    word-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
-    line-height: 1.4;
 }
 
 .typewriter-text.fade-out {
     opacity: 0;
-}
-
-/* --- استعلام الوسائط للهاتف (تغيير حجم الخط فقط للشريط) --- */
-@media (max-width: 768px) {
-    .news-ticker-container {
-        min-height: 60px; /* زيادة الارتفاع قليلاً لاستيعاب سطرين */
-        padding: 8px 10px;
-    }
-
-    .typewriter-text {
-        font-size: 13px; /* تصغير الخط */
-        line-height: 1.6; /* تحسين التباعد بين الأسطر */
-        text-align: center;
-    }
 }
 /* =========================== */
 
@@ -85,6 +62,8 @@ body{
   display: inline-block;
   width: 160px;
   height: 160px;
+  
+  /* 👇 تم تقليل الهامش السفلي من 10px إلى 0 👇 */
   margin-bottom: 0px; 
 }
 
@@ -143,8 +122,9 @@ header{
   box-shadow:0 4px 10px rgba(0,0,0,.2);
 }
 
+/* 👇 تم إضافة تنسيق خاص للعنوان لتقليل الهامش العلوي 👇 */
 header h1 {
-    margin-top: 5px; 
+    margin-top: 5px; /* مسافة صغيرة جداً من الأعلى */
     margin-bottom: 10px;
 }
 
@@ -274,7 +254,7 @@ h3{
     >
   </div>
 
-  <h1>فضاء التكوين البيداغوجي للأساتذة الجدد</h1>
+  <h1>فضاء التكوين البيداغوجي - توقرت</h1>
 </header>
 
 <section class="services">
@@ -304,7 +284,7 @@ h3{
   </div>
 </section>
 
-<footer>© 2025 فضاء التكوين</footer>
+<footer>مديرية التربية لولاية توقرت | فضاء التكوين البيداغوجي | جميع الحقوق محفوظة  © 2025</footer>
 
 <script>
 // ==========================================
