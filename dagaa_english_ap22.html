@@ -19,7 +19,7 @@
 html {
   width: 100%;
   height: 100%;
-  scroll-behavior: auto; /* منع التمرير السلس عند التحميل ليكون فورياً */
+  scroll-behavior: auto !important; /* التأكد من أن التمرير فوري وليس ناعم عند التحميل */
 }
 
 /* --- الحل الجذري لثبات الخلفية --- */
@@ -662,121 +662,6 @@ footer{
     font-size: 14px;
   }
 
-  .badge {
-    font-size: 11px;
-    padding: 3px 8px;
-  }
-
-  .drive-link-btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    margin-top: 12px;
-  }
-
-  .video-list-container {
-    max-height: 350px;
-    padding: 5px;
-  }
-
-  .video-btn {
-    padding: 12px;
-    font-size: 14px;
-    min-height: 55px;
-  }
-
-  .video-btn i {
-    font-size: 20px;
-  }
-
-  .video-wrapper {
-    border-width: 3px;
-    border-radius: 12px;
-  }
-
-  /* --- تنسيق خاص للنوافذ المنبثقة على الجوال --- */
-  .swal2-title {
-    font-size: 20px !important;
-    line-height: 1.4 !important;
-  }
-
-  .swal2-html-container {
-    font-size: 14px !important;
-  }
-
-  .swal2-confirm,
-  .swal2-deny,
-  .swal2-cancel {
-    padding: 8px 20px !important;
-    font-size: 14px !important;
-    min-width: 80px !important;
-  }
-
-  .swal2-actions {
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-    justify-content: center !important;
-  }
-
-  footer {
-    font-size: 12px;
-    padding: 14px 10px;
-    line-height: 1.7;
-  }
-}
-
-/* ====== RESPONSIVE - SMALL MOBILE ====== */
-@media (max-width: 480px) {
-   
-  .typewriter-text {
-    font-size: 12px;
-  }
-
-  header h1 {
-    font-size: 18px;
-  }
-
-  .logo-container {
-    width: 100px;
-    height: 100px;
-  }
-
-  .logo-container img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .logo-ring {
-    width: 95px;
-    height: 95px;
-  }
-
-  .info-box h1 {
-    font-size: 16px;
-  }
-
-  .info-box p {
-    font-size: 13px;
-  }
-
-  .service {
-    padding: 20px 12px;
-    min-height: 130px;
-  }
-
-  .service i {
-    font-size: 40px;
-  }
-
-  .service h3 {
-    font-size: 15px;
-  }
-
-  .icon-btn {
-    width: 100px;
-    height: 100px;
-    font-size: 13px;
-  }
-
   .video-btn {
     font-size: 13px;
     padding: 10px;
@@ -928,17 +813,16 @@ const SECURE_CODE = 'ZmVoQDIwMjY=';
 
 /* ======================================================= */
 
-// حفظ مكان التمرير عند الخروج واستعادته عند الدخول
-document.addEventListener("DOMContentLoaded", function(event) { 
-    var scrollpos = localStorage.getItem('scrollpos');
-    if (scrollpos) window.scrollTo(0, scrollpos);
-});
+// إجبار المتصفح على البدء من أعلى الصفحة عند التحديث
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
 
-window.onbeforeunload = function(e) {
-    localStorage.setItem('scrollpos', window.scrollY);
-};
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+}
 
-/* ======================================================= */
+// =======================================================
 
 function handleLessonsClick() {
   if (ENABLE_PASSWORD) {
@@ -1034,4 +918,159 @@ const driveLinks = {
 
 const globalCycleStatus = {1:true, 2:false, 3:false};
 const moduleCycleStatus = {
-  didactique:{1:true,2
+  didactique:{1:true,2:true,3:true}, tasyire:{1:true,2:true,3:true}, takwime:{1:true,2:true,3:true},
+  nidame:{1:true,2:true,3:true}, akhlakiyate:{1:true,2:true,3:true}, handasa:{1:true,2:true,3:true},
+  wasata:{1:true,2:true,3:true}, tachri:{1:true,2:true,3:true}, psycho:{1:true,2:true,3:true},
+  informatique:{1:true,2:true,3:true}
+};
+
+function isCycleOpen(module,cycle){
+  if(!globalCycleStatus[cycle]) return false;
+  return moduleCycleStatus[module][cycle];
+}
+
+function getFolderId(url) {
+    if (!url) return null;
+    const match = url.match(/folders\/([a-zA-Z0-9-_]+)/);
+    return match ? match[1] : null;
+}
+
+function openCourses(module){
+  let html='<div class="icon-container">';
+  for(let i=1;i<=3;i++){
+    const open=isCycleOpen(module,i);
+    html+=`
+      <div class="icon-btn ${open?'':'closed'}"
+        onclick="${open?`showDriveEmbed('${module}',${i})`:''}">
+        الدورة ${i===1?'الأولى':i===2?'الثانية':'الثالثة'}
+        <span class="badge ${open?'open':'closed'}">
+          ${open?'مفتوحة':'مغلقة'}
+        </span>
+      </div>`;
+  }
+  html+='</div>';
+
+  Swal.fire({
+    title: 'اختر الدورة',
+    html: html,
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    width: '600px', // عرض ثابت للكمبيوتر
+    padding: '1.5em',
+  });
+}
+
+function showDriveEmbed(module, cycle) {
+  const url = driveLinks[module][cycle];
+  const folderId = getFolderId(url);
+
+  if (!url || !folderId) {
+    Swal.fire('تنبيه', 'الرابط غير متوفر حالياً', 'info');
+    return;
+  }
+
+  const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
+
+  const driveButtonHtml = SHOW_DRIVE_BUTTON ? 
+    `<a href="${url}" target="_blank" class="drive-link-btn">
+        <i class="fa-brands fa-google-drive"></i> فتح في Google Drive
+     </a>` : '';
+
+  Swal.fire({
+    title: `ملفات الدورة ${cycle===1?'الأولى':cycle===2?'الثانية':'الثالثة'}`,
+    html: `
+      <div style="border: 2px solid #0FBA50; border-radius: 10px; overflow: hidden; height: 50vh; margin-bottom: 15px;">
+        <iframe src="${embedUrl}" style="width:100%; height:100%; border:none;"></iframe>
+      </div>
+      ${driveButtonHtml}
+    `,
+    width: '800px', // عرض أوسع قليلاً للكمبيوتر لعرض الملفات
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    showDenyButton: true,
+    denyButtonText: 'عودة للخلف',
+  }).then((result) => {
+    if (result.isDenied) {
+      openCourses(module); 
+    }
+  });
+}
+
+
+/* =======================================================
+   3. كود الدروس التطبيقية (Google Drive)
+   ======================================================= */
+
+const videos = [
+  { title: "الدرس التطبيقي الأول:", url: "" }
+];
+
+function convertToPreviewUrl(url) {
+  return url.replace(/\/view.*/, '/preview');
+}
+
+function openVideoList() {
+  let listHtml = '<div class="video-list-container">';
+  
+  videos.forEach((video) => {
+    listHtml += `
+      <div class="video-btn" onclick="playVideo('${video.url}', '${video.title}')">
+        <span>${video.title}</span>
+       <i class="fa-solid fa-circle-play"></i>
+      </div>
+    `;
+  });
+
+  listHtml += '</div>';
+
+  Swal.fire({
+    title: 'الدروس التطبيقية',
+    html: listHtml,
+    showConfirmButton: true,
+    confirmButtonText: 'إغلاق',
+    width: '600px', // عرض مناسب للكمبيوتر
+  });
+}
+
+function playVideo(url, title) {
+  if(!url) return;
+  const previewUrl = convertToPreviewUrl(url);
+
+  Swal.fire({
+    title: title,
+    html: `
+      <div class="video-wrapper">
+        <div class="loader-container" id="videoLoader">
+          <div class="loader"></div>
+        </div>
+        <iframe 
+          src="${previewUrl}" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen
+          onload="document.getElementById('videoLoader').style.display='none';"
+          style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2;"
+        ></iframe>
+      </div>
+    `,
+    width: '800px', // عرض كبير للكمبيوتر للفيديو
+    showCloseButton: false,
+    showConfirmButton: false,
+    showDenyButton: true,
+    denyButtonText: 'عودة للقائمة',
+    denyButtonColor: '#0FBA50',
+  }).then((result) => {
+    if (result.isDenied) {
+      openVideoList();
+    }
+  });
+}
+
+window.onload = function() {
+    window.scrollTo(0, 0); // التأكد النهائي من الصعود
+    typeWriter();
+};
+</script>
+
+</body>
+</html>
