@@ -382,8 +382,14 @@ footer{
   border-radius: 20px !important;
   padding: 20px !important;
   font-family: 'Cairo', sans-serif !important;
-  max-width: 95% !important; /* ضمان عدم تجاوز العرض */
-  width: auto !important;
+}
+
+/* تخصيص العرض في الشاشات الصغيرة فقط */
+@media (max-width: 768px) {
+  .swal2-popup {
+    width: 95% !important;
+    max-width: 95% !important;
+  }
 }
 
 .swal2-title {
@@ -613,13 +619,6 @@ footer{
   }
 
   /* --- تنسيق خاص للنوافذ المنبثقة على الجوال --- */
-  .swal2-popup {
-    width: 95% !important; /* ملء 95% من العرض */
-    max-width: 95% !important;
-    padding: 15px !important;
-    margin: auto !important;
-  }
-
   .swal2-title {
     font-size: 20px !important;
     line-height: 1.4 !important;
@@ -918,8 +917,7 @@ function checkPassword() {
     customClass: {
       confirmButton: 'green-confirm-btn'
     },
-    width: '95%',
-    maxWidth: '500px',
+    // تم حذف width و maxWidth من هنا ليعمل ال CSS
     cancelButtonColor: '#d33',
     preConfirm: (password) => {
       const cleanPass = password ? password.trim() : '';
@@ -1026,8 +1024,8 @@ function openCourses(module){
     html: html,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '95%',
-    maxWidth: '600px',
+    width: '600px', // عرض ثابت للكمبيوتر
+    padding: '1.5em',
   });
 }
 
@@ -1042,7 +1040,6 @@ function showDriveEmbed(module, cycle) {
 
   const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
 
-  // التحقق من المتغير لإظهار الزر أو إخفائه
   const driveButtonHtml = SHOW_DRIVE_BUTTON ? 
     `<a href="${url}" target="_blank" class="drive-link-btn">
         <i class="fa-brands fa-google-drive"></i> فتح في Google Drive
@@ -1056,8 +1053,7 @@ function showDriveEmbed(module, cycle) {
       </div>
       ${driveButtonHtml}
     `,
-    width: '95%',
-    maxWidth: '800px',
+    width: '800px', // عرض أوسع قليلاً للكمبيوتر لعرض الملفات
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
     showDenyButton: true,
@@ -1101,8 +1097,7 @@ function openVideoList() {
     html: listHtml,
     showConfirmButton: true,
     confirmButtonText: 'إغلاق',
-    width: '95%',
-    maxWidth: '600px',
+    width: '600px', // عرض مناسب للكمبيوتر
   });
 }
 
@@ -1127,8 +1122,7 @@ function playVideo(url, title) {
         ></iframe>
       </div>
     `,
-    width: '95%',
-    maxWidth: '800px',
+    width: '800px', // عرض كبير للكمبيوتر للفيديو
     showCloseButton: false,
     showConfirmButton: false,
     showDenyButton: true,
