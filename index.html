@@ -21,10 +21,22 @@
         -webkit-tap-highlight-color: transparent; /* إزالة وميض النقر في الموبايل */
     }
 
-    body {
+   body {
       font-family: 'Cairo', sans-serif;
       margin: 0;
-      background: linear-gradient(135deg, #e8fbf0, #dcf7e6);
+      /* =======================================
+         إعدادات الخلفية الجديدة
+         ======================================= */
+      /* ضع رابط الصورة url() */
+      background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      
+      /* إضافة طبقة لونية نصف شفافة (Overlay) فوق الصورة لجعلها هادئة */
+      position: relative;
+      
       text-align: center;
       min-height: 100vh;
       display: flex;
@@ -32,7 +44,16 @@
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
-      padding: 15px; /* حماية الحواف في الشاشات الصغيرة */
+      padding: 15px; 
+    }
+
+    /* طبقة شفافة خضراء فوق الخلفية للتماشي مع ألوان الموقع */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(232, 251, 240, 0.60), rgba(220, 247, 230, 0.90));
+      z-index: -1;
     }
 
     /* ===========================
@@ -293,36 +314,36 @@
 <script>
 // ================= إعدادات Firebase =================
 const firebaseConfig = {
-  apiKey: "AIzaSyAkQz9pB2ZNlYIvdlTRvi4try3D8LLXS4g",
-  authDomain: "databaseemploye.firebaseapp.com",
-  projectId: "databaseemploye",
-  storageBucket: "databaseemploye.firebasestorage.app",
-  messagingSenderId: "408231477466",
-  appId: "1:408231477466:web:e3bf5bd3eaca7cdcd3a5e3",
-  measurementId: "G-DW8QJ5B231"
+  apiKey: "AIzaSyBNBrVpBK8p_WWNwNhSH-mZ6NXOyr2TLhI",
+  authDomain: "voyage-touggourt-48755.firebaseapp.com",
+  projectId: "voyage-touggourt-48755",
+  storageBucket: "voyage-touggourt-48755.firebasestorage.app",
+  messagingSenderId: "712694455348",
+  appId: "1:712694455348:web:5b4e8df57347edf944fe61",
+  measurementId: "G-TTJT4LQ65L"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 🔴🔴 رابط صفحة الداشبورد 🔴🔴
-const DASHBOARD_PAGE = "dashboard_finale.html"; 
+
+const DASHBOARD_PAGE = "dashboard.html"; 
 
 const REGEX_PATTERNS = {
   nonDigit: /\D/g
 };
 
-// التحقق من أن المدخلات أرقام فقط
+
 function validateNumber(input) {
   input.value = input.value.replace(REGEX_PATTERNS.nonDigit, '');
   if (input.value.length > 16) input.value = input.value.slice(0, 16);
 }
 
-// ================= دالة التحقق الرئيسية =================
+
 async function checkEmployee() {
   const empId = document.getElementById("empId").value.trim();
 
-  // 1. التحقق من الطول (16 رقم)
+  
   if (empId.length < 16) {
     Swal.fire({ 
       icon: 'warning', 
@@ -333,7 +354,7 @@ async function checkEmployee() {
     return;
   }
 
-  // عرض شاشة الانتظار
+ 
   Swal.fire({ title: 'جاري التحقق...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
   try {
